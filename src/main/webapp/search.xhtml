@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">  
+  <ui:composition template="basicTemplate.xhtml">
+    <ui:define name="content">
+        #{studentSearchBean.students.toArray()}
+        <p:dataTable var="student" value="#{studentSearchBean.students}" rows="10" paginator="true">
+            <p:column headerText="Фамилия">
+                <h:outputText value="#{student.person.surname}" />
+            </p:column>
+
+            <p:column headerText="Имя">
+                <h:outputText value="#{student.person.name}" />
+            </p:column>
+            <p:column headerText="Отчество">
+                <h:outputText value="#{student.person.patronymic}" />
+            </p:column>
+        </p:dataTable>
+    </ui:define>
+</ui:composition>
+</html> 
