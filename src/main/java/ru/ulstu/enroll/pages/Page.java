@@ -11,8 +11,9 @@ public class Page implements Serializable {
     public static final String HEADER = "header.xhtml";
     public static final String MENU = "menu.xhtml";
     public static final String MAIN = "/index.xhtml";
+    public static final String STUDENT = "student/";
     public static final String STUDENT_SEARCH = "/student/studentSearch.xhtml";
-    public static final String STUDENT_VIEW = "/student/view.xhtml";
+    public static final String STUDENT_VIEW = "view";
        
     public String getHEADER() {
         return HEADER;

@@ -23,14 +23,15 @@
                         #{rowIndex+1}
                     </p:column>
                     <p:column headerText="ФИО">
-                        <h:link value="#{student.person.surname} #{student.person.name} #{student.person.patronymic}" outcome="#{page.STUDENT_VIEW}" >
-                            <f:param name="studentId" value="#{student.studentId}" />
-                        </h:link>
+                        <h:outputLink value="#{page.STUDENT_VIEW}?studentId=#{student.studentId}" target="_blank">
+                            <h:outputText value="#{student.person.surname} #{student.person.name} #{student.person.patronymic}" />
+                        </h:outputLink>
                     </p:column>
                     <p:column headerText="Рег. номер">
-                        <h:link value="#{studentSearchBean.getStudentRegNum(student)}" outcome="#{page.STUDENT_VIEW}" >
-                            <f:param name="studentId" value="#{student.studentId}" />
-                        </h:link>
+                        <h:link value="Login" outcome="view" />
+                        <h:outputLink value="#{page.STUDENT_VIEW}?studentId=#{student.studentId}" target="_blank">
+                            <h:outputText value="#{student.studentEduCollection[0].regNum}" />
+                        </h:outputLink>
                     </p:column>
                 </p:dataTable>
                 </p:panel>

@@ -3,6 +3,7 @@ package ru.ulstu.enroll.entity.student;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +27,7 @@ import ru.ulstu.enroll.entity.person.Person;
 @Table(name = "student", catalog = "sp", schema = "student")
 @NamedQueries({
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"), 
-    @NamedQuery(name = Student.FIND_CURRENT_ENROLL_YEAR, query = "SELECT s FROM Student s, StudentEdu e WHERE e.studentId=s and e.insertTime >= :beginPeriod ORDER BY s.person.surname, s.person.name, s.person.patronymic"), 
+    @NamedQuery(name = Student.FIND_CURRENT_ENROLL_YEAR, query = "SELECT s FROM Student s, StudentEdu e WHERE e.studentId=s and e.insertTime >= :beginPeriod and e.priority = 1 ORDER BY s.person.surname, s.person.name, s.person.patronymic"), 
     @NamedQuery(name = "Student.findByStudentId", query = "SELECT s FROM Student s WHERE s.studentId = :studentId")
 })
 public class Student implements Serializable {
@@ -100,7 +101,7 @@ public class Student implements Serializable {
     @ManyToOne
     private StudentTraining trainingId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
-    private Collection<StudentEdu> studentEduCollection;
+    private List<StudentEdu> studentEduList;
 
     private String status;
 
@@ -327,12 +328,12 @@ public class Student implements Serializable {
         this.trainingId = trainingId;
     }
 
-    public Collection<StudentEdu> getStudentEduCollection() {
-        return studentEduCollection;
+    public List<StudentEdu> getStudentEduList() {
+        return studentEduList;
     }
 
-    public void setStudentEduCollection(Collection<StudentEdu> studentEduCollection) {
-        this.studentEduCollection = studentEduCollection;
+    public void setStudentEduList(List<StudentEdu> studentEduList) {
+        this.studentEduList = studentEduList;
     }
 
     @Override
