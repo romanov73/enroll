@@ -34,12 +34,18 @@ public class StudentSearchBean implements Serializable {
                         controller.findAll(Date.class, 
                                 Period.FIND_ALL).stream().reduce((a, b) -> b)
                                 .orElse(new Date())
-                        ), 100);
+                        ));
     }
 
     public List<Student> getStudents() {
         if (filter != null && !filter.equals("")) {
-            return students.stream().filter(s -> s.getPerson().getSurname().toUpperCase().contains(filter.toUpperCase())).collect(Collectors.toList());
+            return students.stream()
+                    .filter(s -> 
+                            s.getPerson().getSurname().toUpperCase().contains(filter.toUpperCase()) ||
+                            s.getPerson().getName().toUpperCase().contains(filter.toUpperCase()) ||
+                            s.getPerson().getPatronymic().toUpperCase().contains(filter.toUpperCase()) ||
+                            s.getStudentEduCollection().stream().filter(e -> e.getRegNum().toUpperCase().contains(filter)).collect(Collectors.toList()).size() > 0
+                    ).collect(Collectors.toList());
         }
         return students;
     }
@@ -51,8 +57,4 @@ public class StudentSearchBean implements Serializable {
     public void setFilter(String filter) {
         this.filter = filter;
     }
- 
-    public void filterStudents() {
-        System.out.println(filter);
-    }    
 }

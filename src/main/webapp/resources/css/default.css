@@ -1,4 +1,4 @@
-body {
+/*body {
     background-color: #ffffff;
     font-size: 12px;
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
@@ -26,4 +26,10 @@ a:link:hover, a:visited:hover  {
   color: #045491;
   font-weight : bold;
   text-decoration : underline;
+}
+*/
+/* replace primefaces styles */
+.ui-widget-content
+{
+    border: 0px solid #a8a8a8
 }

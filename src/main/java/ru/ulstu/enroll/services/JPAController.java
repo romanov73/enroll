@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -14,13 +15,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import ru.ulstu.enroll.entity.BaseEntity;
 
 @Named
+@ApplicationScoped
 public class JPAController implements Serializable {
 
     EntityManager em = Persistence.createEntityManagerFactory("enrollPU").createEntityManager();
-
-    public JPAController() {
-
-    }
 
     public void create(BaseEntity newEntity) {
         em.getTransaction().begin();

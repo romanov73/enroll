@@ -12,6 +12,7 @@ public class Page implements Serializable {
     public static final String MENU = "menu.xhtml";
     public static final String MAIN = "/index.xhtml";
     public static final String STUDENT_SEARCH = "/student/studentSearch.xhtml";
+    public static final String STUDENT_VIEW = "/student/view.xhtml";
        
     public String getHEADER() {
         return HEADER;
@@ -31,6 +32,10 @@ public class Page implements Serializable {
 
     public String getMAIN() {
         return MAIN;
+    }
+
+    public String getSTUDENT_VIEW() {
+        return STUDENT_VIEW;
     }
     
 }

@@ -13,21 +13,21 @@
         <ui:define name="title">Поиск абитуриентов</ui:define>
         <ui:define name="content">
             <h:form>
+                <p:outputLabel value="Фильтр: " />
                 <p:inputText id="filter" value="#{studentSearchBean.filter}">
-                    <p:ajax event="keyup" update="students" listener="#{studentSearchBean.filterStudents}" />
+                    <p:ajax event="keyup" update="students" />
                 </p:inputText>
-                <p:dataTable id="students" var="student" value="#{studentSearchBean.students}" rows="10" paginator="true" rowIndexVar="rowIndex">
+                <p:dataTable id="students" var="student" value="#{studentSearchBean.students}" rows="10" paginator="true" rowIndexVar="rowIndex" paginatorPosition="bottom">
                     <p:column headerText="#" width="5%">
                         #{rowIndex+1}
                     </p:column>
-                    <p:column headerText="Фамилия">
-                        <h:outputText value="${student.person.surname}" />
+                    <p:column headerText="ФИО">
+                        <h:outputLink value="#{page.STUDENT_VIEW}?studentId=#{student.studentId}">
+                            <h:outputText value="#{student.person.surname} #{student.person.name} #{student.person.patronymic}" />
+                        </h:outputLink>
                     </p:column>
-                    <p:column headerText="Имя">
-                        <h:outputText value="${student.person.name}" />
-                    </p:column>
-                    <p:column headerText="Отчество">
-                        <h:outputText value="${student.person.surname}" />
+                    <p:column headerText="Рег. номер">
+                        <h:outputText value="#{student.studentEduCollection[0].regNum}" />
                     </p:column>
                 </p:dataTable>
             </h:form>
