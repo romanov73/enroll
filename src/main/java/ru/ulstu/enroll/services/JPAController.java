@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -18,7 +19,8 @@ import ru.ulstu.enroll.entity.BaseEntity;
 @ApplicationScoped
 public class JPAController implements Serializable {
 
-    EntityManager em = Persistence.createEntityManagerFactory("enrollPU").createEntityManager();
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("enrollPU");
+    private static EntityManager em = emf.createEntityManager();
 
     public void create(BaseEntity newEntity) {
         em.getTransaction().begin();
@@ -36,9 +38,10 @@ public class JPAController implements Serializable {
     public void destroy(BaseEntity entity) {
         em.getTransaction().begin();
         BaseEntity findEntity = null;
-        /*findEntity = em.getReference(entity.getClass(), entity.getId());
-        findEntity.getId();*/
-        em.remove(findEntity);
+        findEntity = em.getReference(entity.getClass(), entity.getId());
+        if (findEntity != null) {
+            em.remove(findEntity);
+        }
         em.getTransaction().commit();
     }
 
@@ -56,6 +59,11 @@ public class JPAController implements Serializable {
 
     public <T> List<T> findAll(Class<T> type, String namedQueryName) {
         return em.createNamedQuery(namedQueryName, type).getResultList();
+    }
+    
+    public <T> T find(Class<T> type, String namedQueryName, QueryParameter parameters) {
+        List<T> result = findAll(type, namedQueryName, parameters, 0);
+        return result != null && result.size() > 0 ? result.get(0) : null;
     }
 
     public <T> List<T> findAll(Class<T> type, String queryName, int resultLimit) {
@@ -91,5 +99,11 @@ public class JPAController implements Serializable {
             query.setParameter(entry.getKey(), entry.getValue());
         });
         return query;
+    }
+    
+     public static void releaseResources() {
+        if (emf != null) {
+            emf.close();
+        }       
     }
 }

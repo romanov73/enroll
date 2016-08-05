@@ -8,27 +8,27 @@
     <ui:composition template="/basicTemplate.xhtml">
         <f:metadata>
             <!--f:viewParam id="id" name="id" value="#{employeeBacking.employee}" converter="employeeConverter" /-->
-            <f:viewAction action="#{studentSearchBean.init}" />
+            <f:viewAction action="#{searchBean.init}" />
         </f:metadata>
         <ui:define name="title">Поиск абитуриентов</ui:define>
         <ui:define name="content">
             <h:form>
                 <p:panel class="ui-menu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix" style="width:99%;">
                     <p:outputLabel value="Фильтр: " />
-                    <p:inputText id="filter" value="#{studentSearchBean.filter}">
+                    <p:inputText id="filter" value="#{searchBean.filter}">
                         <p:ajax event="keyup" update="students" />
                     </p:inputText>
-                <p:dataTable id="students" var="student" value="#{studentSearchBean.students}" rows="10" paginator="true" rowIndexVar="rowIndex" paginatorPosition="bottom">
+                <p:dataTable id="students" var="student" value="#{searchBean.students}" rows="10" paginator="true" rowIndexVar="rowIndex" paginatorPosition="bottom">
                     <p:column headerText="#" width="5%">
                         #{rowIndex+1}
                     </p:column>
-                    <p:column headerText="ФИО">
-                        <h:link value="#{student.person.surname} #{student.person.name} #{student.person.patronymic}" outcome="#{page.STUDENT_VIEW}" >
+                    <p:column headerText="Абитуриент">
+                        <h:link value="#{student.person.surname} #{student.person.name} #{student.person.patronymic}" outcome="#{page.STUDENT_VIEW}" target="_blank">
                             <f:param name="studentId" value="#{student.studentId}" />
                         </h:link>
                     </p:column>
                     <p:column headerText="Рег. номер">
-                        <h:link value="#{studentSearchBean.getStudentRegNum(student)}" outcome="#{page.STUDENT_VIEW}" >
+                        <h:link value="#{searchBean.getStudentRegNum(student)}" outcome="#{page.STUDENT_VIEW}" target="_blank">
                             <f:param name="studentId" value="#{student.studentId}" />
                         </h:link>
                     </p:column>

@@ -1,14 +1,9 @@
 package ru.ulstu.enroll.pages.student;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,7 +14,7 @@ import ru.ulstu.enroll.services.QueryParameter;
 
 @Named
 @ViewScoped
-public class StudentSearchBean implements Serializable {
+public class SearchBean implements Serializable {
 
     @Inject
     private JPAController controller;
@@ -38,7 +33,7 @@ public class StudentSearchBean implements Serializable {
     }
 
     public List<Student> getStudents() {
-        if (filter != null && !filter.equals("")) {
+        if (filter != null && !filter.equals("") && students != null) {
             return students.stream()
                     .filter(s -> 
                             s.getPerson().getSurname().toUpperCase().contains(filter.toUpperCase()) ||

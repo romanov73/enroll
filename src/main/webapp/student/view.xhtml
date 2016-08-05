@@ -7,33 +7,34 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">  
     <ui:composition template="/basicTemplate.xhtml">
         <f:metadata>
-            <!--f:viewParam id="id" name="id" value="#{employeeBacking.employee}" converter="employeeConverter" /-->
-            <f:viewAction action="#{studentSearchBean.init}" />
+            <f:viewParam id="studentId" name="studentId" value="#{viewBean.student}" >
+                <f:converter binding="#{studentConverter}" />
+            </f:viewParam>
+            <f:viewAction action="#{viewBean.init}" />
         </f:metadata>
-        <ui:define name="title">Поиск абитуриентов</ui:define>
         <ui:define name="content">
             <h:form>
                 <p:panel class="ui-menu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix" style="width:99%;">
-                    <p:outputLabel value="Фильтр: " />
-                    <p:inputText id="filter" value="#{studentSearchBean.filter}">
-                        <p:ajax event="keyup" update="students" />
-                    </p:inputText>
-                <p:dataTable id="students" var="student" value="#{studentSearchBean.students}" rows="10" paginator="true" rowIndexVar="rowIndex" paginatorPosition="bottom">
-                    <p:column headerText="#" width="5%">
-                        #{rowIndex+1}
-                    </p:column>
-                    <p:column headerText="ФИО">
-                        <h:outputLink value="#{page.STUDENT_VIEW}?studentId=#{student.studentId}" target="_blank">
-                            <h:outputText value="#{student.person.surname} #{student.person.name} #{student.person.patronymic}" />
-                        </h:outputLink>
-                    </p:column>
-                    <p:column headerText="Рег. номер">
-                        <h:link value="Login" outcome="view" />
-                        <h:outputLink value="#{page.STUDENT_VIEW}?studentId=#{student.studentId}" target="_blank">
-                            <h:outputText value="#{student.studentEduCollection[0].regNum}" />
-                        </h:outputLink>
-                    </p:column>
-                </p:dataTable>
+                    <h:commandButton action="#{viewBean.deleteStudent()}" value="Удалить" onclick="return confirm('Вы уверены?');"/>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Фамилия:" style="font-weight: bold"/>
+                        <h:outputText value="#{viewBean.student.person.surname}" />
+
+                        <h:outputText value="Имя:" style="font-weight: bold"/>
+                        <h:outputText value="#{viewBean.student.person.name}" />
+
+                        <h:outputText value="Отчество:" style="font-weight: bold"/>
+                        <h:outputText value="#{viewBean.student.person.patronymic}" />
+                        
+                        <h:outputText value="Дата рождения:" style="font-weight: bold"/>
+                        <p:calendar value="#{viewBean.student.person.birthDate}" navigator="true"/>
+                        
+                        <h:outputText value="Пол:" style="font-weight: bold"/>
+                        <p:selectOneRadio id="console" value="#{viewBean.student.person.sex}">
+                            <f:selectItem itemLabel="Мужской" itemValue="м" />
+                            <f:selectItem itemLabel="Женский" itemValue="ж" />
+                        </p:selectOneRadio>
+                    </h:panelGrid>
                 </p:panel>
             </h:form>
         </ui:define>

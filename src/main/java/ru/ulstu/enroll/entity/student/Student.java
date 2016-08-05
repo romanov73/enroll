@@ -1,6 +1,5 @@
 package ru.ulstu.enroll.entity.student;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import ru.ulstu.enroll.entity.BaseEntity;
 import ru.ulstu.enroll.entity.person.Person;
 
 
@@ -28,23 +28,26 @@ import ru.ulstu.enroll.entity.person.Person;
 @NamedQueries({
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"), 
     @NamedQuery(name = Student.FIND_CURRENT_ENROLL_YEAR, query = "SELECT s FROM Student s, StudentEdu e WHERE e.studentId=s and e.insertTime >= :beginPeriod and e.priority = 1 ORDER BY s.person.surname, s.person.name, s.person.patronymic"), 
-    @NamedQuery(name = "Student.findByStudentId", query = "SELECT s FROM Student s WHERE s.studentId = :studentId")
+    @NamedQuery(name = Student.FIND_BY_ID, query = "SELECT s FROM Student s WHERE s.studentId = :studentId")
 })
-public class Student implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Student extends BaseEntity {
     public final static String FIND_CURRENT_ENROLL_YEAR = "Student.findCurrentEnrollYear";
+    public final static String FIND_BY_ID = "Student.findById";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "student_id", nullable = false)
-    private Integer studentId;
+    private Long studentId;
+
     @Column(name = "insert_by", length = 50)
     private String insertBy;
+
     @Column(name = "update_by", length = 50)
     private String updateBy;
+
     @Column(name = "insert_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date insertTime;
+    
     @Column(name = "update_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
@@ -108,15 +111,15 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(Integer studentId) {
+    public Student(Long studentId) {
         this.studentId = studentId;
     }
 
-    public Integer getStudentId() {
+    public Long getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
 
@@ -364,6 +367,10 @@ public class Student implements Serializable {
         this.status = status;
     }
     
+    @Override
+    public Long getId() {
+        return this.studentId;
+    }
 
     @Override
     public String toString() {

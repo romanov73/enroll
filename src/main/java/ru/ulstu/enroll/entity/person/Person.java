@@ -4,7 +4,6 @@
  */
 package ru.ulstu.enroll.entity.person;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -247,6 +246,11 @@ public class Person extends BaseEntity  {
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public Long getId() {
+        return this.personId;
     }
 
     @Override

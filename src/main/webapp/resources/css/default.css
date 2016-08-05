@@ -31,7 +31,8 @@ a:link:hover, a:visited:hover  {
 /* replace primefaces styles */
 .ui-widget-content
 {
-    border: 0px solid #a8a8a8
+    border: 0px solid #a8a8a8;
+    font-size : 95%;
 }
 
 a:link  {
